@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>David Bloxham – Portfolio (Print)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════════════
+   DESIGN TOKENS — exact match to website
+══════════════════════════════════════════ */
+:root {
+  --ink:       #1a1a2e;
+  --paper:     #f5f0e8;
+  --cream:     #faf7f2;
+  --rust:      #c0392b;
+  --amber:     #e67e22;
+  --slate:     #4a5568;
+  --rule:      #d4c9b0;
+  --highlight: #fff3cd;
+}
+
+/* ══════════════════════════════════════════
+   RESET
+══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ══════════════════════════════════════════
+   PAGE SETUP — A4 landscape
+══════════════════════════════════════════ */
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+.page {
+  width: 297mm;
+  height: 210mm;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  page-break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+}
+.page:last-child { page-break-after: avoid; }
+
+/* Grid paper texture — matches website body::before */
+.page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(180,160,120,0.065) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,160,120,0.065) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Cream background on non-dark pages */
+.page.bg-cream  { background: var(--cream); }
+.page.bg-paper  { background: var(--paper); }
+.page.bg-ink    { background: var(--ink); }
+.page.bg-ink::after {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+}
+
+/* all direct children sit above texture */
+.page > * { position: relative; z-index: 1; }
+
+/* ══════════════════════════════════════════
+   NAV BAR — exact copy from website
+══════════════════════════════════════════ */
+.nav {
+  width: 100%;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10mm;
+  height: 10mm;
+  flex-shrink: 0;
+}
+
+.nav-logo {
+  font-family: 'DM Serif Display', serif;
+  color: var(--paper);
+  font-size: 9.5pt;
+  letter-spacing: 0.02em;
+}
+.nav-logo span { color: var(--amber); }
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 6mm;
+}
+.nav ul li a {
+  color: rgba(245,240,232,0.65);
+  text-decoration: none;
+  font-size: 6pt;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.nav ul li a.active { color: var(--amber); }
+
+/* ══════════════════════════════════════════
+   SHARED SECTION HEADER COMPONENTS
+══════════════════════════════════════════ */
+.section-eyebrow {
+  display: block;
+  font-size: 6pt;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 2mm;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22pt;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.section-rule {
+  width: 12mm;
+  height: 3px;
+  background: var(--amber);
+  margin-top: 3mm;
+}
+.section-header-center {
+  text-align: center;
+  margin-bottom: 7mm;
+}
+.section-header-center .section-rule { margin: 3mm auto 0; }
+
+
+/* ══════════════════════════════════════════
+   PAGE 1 — HERO
+══════════════════════════════════════════ */
+.hero-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 0;
+}
+
+.hero-left {
+  padding: 10mm 8mm 8mm 12mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--cream);
+}
+
+.hero-tag {
+  display: inline-block;
+  background: var(--rust);
+  color: white;
+  font-size: 6pt;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 1.5mm 3.5mm;
+  margin-bottom: 5mm;
+  align-self: flex-start;
+}
+
+.hero-h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 44pt;
+  line-height: 0.98;
+  color: var(--ink);
+  margin-bottom: 1.5mm;
+}
+
+.hero-subtitle {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 13pt;
+  color: var(--rust);
+  margin-bottom: 5mm;
+}
+
+.hero-bio {
+  font-size: 9pt;
+  color: var(--slate);
+  max-width: 95mm;
+  margin-bottom: 7mm;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 3mm;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2.5mm 6mm;
+  font-weight: 500;
+  font-size: 7.5pt;
+  letter-spacing: 0.04em;
+}
+.btn-outline {
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  padding: 2.5mm 6mm;
+  font-weight: 500;
+  font-size: 7.5pt;
+  letter-spacing: 0.04em;
+}
+
+/* Hero right — dark stats panel */
+.hero-right {
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10mm 10mm;
+  position: relative;
+  overflow: hidden;
+}
+.hero-right::before {
+  content: '';
+  position: absolute;
+  width: 200px; height: 200px;
+  background: var(--rust);
+  opacity: 0.1;
+  border-radius: 50%;
+  bottom: -60px; right: -60px;
+}
+.hero-right::after {
+  content: '';
+  position: absolute;
+  width: 140px; height: 140px;
+  background: var(--amber);
+  opacity: 0.07;
+  border-radius: 50%;
+  top: 30px; left: -40px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5px;
+  margin-bottom: 6mm;
+  position: relative;
+  z-index: 2;
+}
+.stat-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 4mm 4mm;
+}
+.stat-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20pt;
+  color: var(--amber);
+  display: block;
+  line-height: 1;
+  margin-bottom: 1.5mm;
+}
+.stat-label {
+  color: rgba(245,240,232,0.58);
+  font-size: 6pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+}
+
+.hero-tools-wrap { position: relative; z-index: 2; }
+.hero-tools-label {
+  font-size: 6pt;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.3);
+  margin-bottom: 2.5mm;
+}
+.hero-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5mm;
+}
+.tool-tag {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(245,240,232,0.8);
+  font-size: 6.5pt;
+  padding: 1mm 2.5mm;
+  letter-spacing: 0.04em;
+}
+
+
+/* ══════════════════════════════════════════
+   PAGE 2 — ABOUT ME
+══════════════════════════════════════════ */
+.about-body {
+  flex: 1;
+  padding: 9mm 12mm 8mm 12mm;
+  border-top: 3px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+
+.about-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12mm;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--slate);
+  margin-bottom: 3.5mm;
+  font-size: 9pt;
+  line-height: 1.65;
+}
+.about-text strong { color: var(--ink); font-weight: 600; }
+
+.about-highlight {
+  background: var(--highlight);
+  border-left: 4px solid var(--amber);
+  padding: 3.5mm 4.5mm;
+  margin-top: 4mm;
+  font-size: 9pt;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+.skills-column h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 13pt;
+  margin-bottom: 4mm;
+  padding-bottom: 2.5mm;
+  border-bottom: 2px solid var(--rule);
+}
+.skill-group { margin-bottom: 4.5mm; }
+.skill-group-label {
+  font-size: 6pt;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 2mm;
+  display: block;
+}
+.skill-pills { display: flex; flex-wrap: wrap; gap: 1.5mm; }
+.skill-pill {
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 7pt;
+  padding: 1mm 3mm;
+  font-weight: 500;
+}
+.skill-pill.light {
+  background: transparent;
+  border: 1.2px solid var(--ink);
+  color: var(--ink);
+}
+
+
+/* ══════════════════════════════════════════
+   PAGES 3 & 4 — PORTFOLIO
+══════════════════════════════════════════ */
+.work-body {
+  flex: 1;
+  padding: 7mm 10mm 7mm 10mm;
+  display: flex;
+  flex-direction: column;
+}
+
+.projects-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  align-items: stretch;
+}
+
+.project-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 4.5mm 5mm;
+  position: relative;
+  overflow: hidden;
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--rule);
+}
+.project-card.featured {
+  grid-column: span 2;
+  background: var(--ink);
+  color: var(--paper);
+}
+.project-card.featured::before { background: var(--amber); }
+
+.project-category {
+  font-size: 6pt;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 2mm;
+  display: block;
+}
+.project-card.featured .project-category { color: var(--amber); }
+
+.project-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 11pt;
+  margin-bottom: 2mm;
+  line-height: 1.2;
+}
+.project-card.featured .project-title { font-size: 13.5pt; color: var(--paper); }
+
+.project-desc {
+  font-size: 7.5pt;
+  color: var(--slate);
+  margin-bottom: 2.5mm;
+  line-height: 1.6;
+}
+.project-card.featured .project-desc { color: rgba(245,240,232,0.7); }
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1mm;
+  margin-bottom: 2mm;
+}
+.project-tag {
+  font-size: 6pt;
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  padding: 0.8mm 2mm;
+  color: var(--slate);
+  letter-spacing: 0.04em;
+}
+.project-card.featured .project-tag {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.15);
+  color: rgba(245,240,232,0.75);
+}
+
+.project-drive {
+  font-size: 6pt;
+  display: block;
+  margin-top: 1.5mm;
+  line-height: 1.45;
+  word-break: break-all;
+}
+.project-drive-arrow {
+  font-weight: 700;
+  color: var(--rust);
+  margin-right: 1mm;
+}
+.project-card.featured .project-drive-arrow { color: var(--amber); }
+.project-drive-url {
+  color: var(--slate);
+}
+.project-card.featured .project-drive-url { color: rgba(245,240,232,0.55); }
+
+.project-number {
+  position: absolute;
+  bottom: 2mm; right: 3mm;
+  font-family: 'DM Serif Display', serif;
+  font-size: 32pt;
+  opacity: 0.055;
+  line-height: 1;
+  pointer-events: none;
+  color: inherit;
+}
+
+
+/* ══════════════════════════════════════════
+   PAGE 5 — HOW I WORK
+══════════════════════════════════════════ */
+.process-body {
+  flex: 1;
+  padding: 10mm 12mm 10mm 12mm;
+  display: flex;
+  flex-direction: column;
+  border-top: 3px solid var(--amber);
+}
+
+.process-body .section-eyebrow { color: var(--amber); }
+.process-body .section-title   { color: var(--paper); }
+.process-body .section-rule    { background: var(--rust); }
+
+.process-steps {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5px;
+  align-items: stretch;
+  margin-top: 2mm;
+}
+
+.process-step {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 6mm 5mm;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28pt;
+  color: var(--amber);
+  opacity: 0.4;
+  line-height: 1;
+  margin-bottom: 3mm;
+  display: block;
+}
+.step-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 11pt;
+  color: var(--paper);
+  margin-bottom: 3mm;
+}
+.step-desc {
+  font-size: 8pt;
+  color: rgba(245,240,232,0.55);
+  line-height: 1.65;
+}
+
+/* Design principles strip below steps */
+.process-principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3mm;
+  margin-top: 5mm;
+}
+.principle {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 4mm 5mm;
+}
+.principle-head {
+  font-family: 'DM Serif Display', serif;
+  font-size: 9.5pt;
+  color: var(--paper);
+  margin-bottom: 1.5mm;
+}
+.principle-head span {
+  color: var(--amber);
+  margin-right: 2mm;
+  font-style: normal;
+}
+.principle-body {
+  font-size: 7.5pt;
+  color: rgba(245,240,232,0.52);
+  line-height: 1.6;
+}
+
+
+/* ══════════════════════════════════════════
+   PAGE 6 — EXPERIENCE + TOOLS + CONTACT
+══════════════════════════════════════════ */
+.page6-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 0;
+}
+
+/* Left col: Experience */
+.exp-col {
+  background: var(--paper);
+  border-top: 3px solid var(--ink);
+  padding: 7mm 8mm 6mm 12mm;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.exp-col .section-eyebrow { margin-bottom: 1mm; }
+.exp-col .section-title   { font-size: 16pt; }
+.exp-col .section-rule    { margin-bottom: 5mm; }
+
+.exp-list { flex: 1; display: flex; flex-direction: column; gap: 0; }
+
+.exp-item {
+  display: grid;
+  grid-template-columns: 30mm 1fr;
+  gap: 4mm;
+  padding: 3mm 0;
+  border-bottom: 1px solid var(--rule);
+}
+.exp-period {
+  font-size: 6.5pt;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 1mm;
+  line-height: 1.4;
+}
+.exp-company {
+  font-family: 'DM Serif Display', serif;
+  font-size: 8pt;
+  color: var(--ink);
+}
+.exp-role {
+  font-family: 'DM Serif Display', serif;
+  font-size: 10pt;
+  color: var(--ink);
+  margin-bottom: 1.5mm;
+  line-height: 1.2;
+}
+.exp-achievements { list-style: none; display: flex; flex-direction: column; gap: 1mm; }
+.exp-achievements li {
+  padding-left: 3.5mm;
+  position: relative;
+  font-size: 7.5pt;
+  color: var(--slate);
+  line-height: 1.5;
+}
+.exp-achievements li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--rust);
+  font-size: 6pt;
+  top: 1mm;
+}
+
+/* Right col: Tools + Contact stacked */
+.right-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.tools-col {
+  background: var(--cream);
+  padding: 7mm 10mm 5mm 8mm;
+  border-top: 3px solid var(--ink);
+  flex: 1;
+}
+
+.tools-col .section-eyebrow { margin-bottom: 1mm; }
+.tools-col .section-title   { font-size: 16pt; }
+.tools-col .section-rule    { margin-bottom: 5mm; }
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5px;
+}
+.tool-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 3mm 2mm;
+  text-align: center;
+}
+.tool-icon  { font-size: 11pt; display: block; margin-bottom: 1mm; }
+.tool-name  { font-size: 6.5pt; font-weight: 600; letter-spacing: 0.03em; line-height: 1.3; }
+.tool-type  { font-size: 5.5pt; color: var(--slate); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.5mm; }
+
+/* Contact block */
+.contact-col {
+  background: var(--ink);
+  padding: 6mm 10mm 6mm 8mm;
+  text-align: center;
+}
+.contact-col .section-eyebrow { color: var(--amber); }
+.contact-col .section-title   { color: var(--paper); font-size: 14pt; }
+.contact-col .section-rule    { background: var(--rust); margin: 2mm auto 4mm; }
+
+.contact-tagline {
+  color: rgba(245,240,232,0.6);
+  font-size: 8pt;
+  margin-bottom: 4mm;
+  line-height: 1.5;
+}
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 2.5mm;
+  flex-wrap: wrap;
+}
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5mm;
+  padding: 2mm 4mm;
+  font-size: 7.5pt;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+.contact-link.primary  { background: var(--amber); color: var(--ink); }
+.contact-link.secondary { border: 1.2px solid rgba(255,255,255,0.22); color: var(--paper); }
+
+.footer-note {
+  margin-top: 4mm;
+  padding-top: 3mm;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  color: rgba(245,240,232,0.3);
+  font-size: 6.5pt;
+  letter-spacing: 0.05em;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1 — HERO
+═══════════════════════════════════════════ -->
+<div class="page bg-cream">
+  <nav class="nav">
+    <div class="nav-logo">David <span>Bloxham</span></div>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Process</a></li>
+      <li><a href="#">Experience</a></li>
+      <li><a href="#">Tools</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-body">
+    <div class="hero-left">
+      <span class="hero-tag">Content &amp; Training Designer</span>
+      <h1 class="hero-h1">David<br>Bloxham</h1>
+      <p class="hero-subtitle">Putting users first.</p>
+      <p class="hero-bio">I transform complex information into clear, engaging learning experiences. From eLearning modules and CPD-accredited programmes to accessible help content — I build content that reduces friction, builds confidence, and actually gets used.</p>
+      <div class="hero-ctas">
+        <span class="btn-primary">View my work</span>
+        <span class="btn-outline">Get in touch</span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="stat-grid">
+        <div class="stat-box">
+          <span class="stat-number">20+</span>
+          <span class="stat-label">Years in L&amp;D &amp; Content</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number">CPD</span>
+          <span class="stat-label">Accredited Programmes</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number">WCAG</span>
+          <span class="stat-label">2.1 Accessibility Lead</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number">↓</span>
+          <span class="stat-label">Measurably reduced support demand</span>
+        </div>
+      </div>
+      <div class="hero-tools-wrap">
+        <div class="hero-tools-label">Tools &amp; platforms</div>
+        <div class="hero-tools">
+          <span class="tool-tag">MadCap Flare</span>
+          <span class="tool-tag">Articulate Storyline</span>
+          <span class="tool-tag">Camtasia</span>
+          <span class="tool-tag">Teachable</span>
+          <span class="tool-tag">Git</span>
+          <span class="tool-tag">Gainsight PX</span>
+          <span class="tool-tag">Power Automate</span>
+          <span class="tool-tag">AI-assisted</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2 — ABOUT ME
+═══════════════════════════════════════════ -->
+<div class="page bg-paper">
+  <nav class="nav">
+    <div class="nav-logo">David <span>Bloxham</span></div>
+    <ul>
+      <li><a href="#" class="active">About</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Process</a></li>
+      <li><a href="#">Experience</a></li>
+      <li><a href="#">Tools</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="about-body">
+    <div class="section-header-center" style="text-align:left; margin-bottom:6mm;">
+      <span class="section-eyebrow">About me</span>
+      <h2 class="section-title">Clarity is a design decision.</h2>
+      <div class="section-rule" style="margin:3mm 0 0;"></div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>content designer with a deep specialism in training design</strong>, with over two decades spent turning legislation, product complexity, and process change into learning content that genuinely helps people.</p>
+        <p>My career at IRIS Software Group spanned front-line support, senior consulting, CPD-accredited training delivery, and a move into full content design — giving me a rare end-to-end perspective on what users actually need and why they struggle.</p>
+        <p>I believe great training isn't about dumping information — it's about structuring it so people can act on it. I bring <strong>instructional design rigour, content design sensibility, and genuine curiosity</strong> to every project.</p>
+        <div class="about-highlight">
+          "Known for being approachable, patient, and great at breaking down complex information — I thrive in environments where communication, teamwork, and adaptability matter."
+        </div>
+      </div>
+
+      <div class="skills-column">
+        <h3>What I bring</h3>
+        <div class="skill-group">
+          <span class="skill-group-label">Training &amp; Learning Design</span>
+          <div class="skill-pills">
+            <span class="skill-pill">Instructional Design</span>
+            <span class="skill-pill">eLearning Development</span>
+            <span class="skill-pill">CPD Accreditation</span>
+            <span class="skill-pill">Microlearning</span>
+            <span class="skill-pill">Scenario-based Learning</span>
+            <span class="skill-pill">Video-based Training</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <span class="skill-group-label">Content Design</span>
+          <div class="skill-pills">
+            <span class="skill-pill light">Structured Authoring</span>
+            <span class="skill-pill light">Information Architecture</span>
+            <span class="skill-pill light">WCAG 2.1 Accessibility</span>
+            <span class="skill-pill light">Compliance Writing</span>
+            <span class="skill-pill light">Tone of Voice</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <span class="skill-group-label">Process &amp; Collaboration</span>
+          <div class="skill-pills">
+            <span class="skill-pill">SME Collaboration</span>
+            <span class="skill-pill">Analytics &amp; Feedback</span>
+            <span class="skill-pill">Stakeholder Engagement</span>
+            <span class="skill-pill">Version Control</span>
+            <span class="skill-pill">Documentation Governance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3 — PORTFOLIO (cards 1–5)
+═══════════════════════════════════════════ -->
+<div class="page bg-cream">
+  <nav class="nav">
+    <div class="nav-logo">David <span>Bloxham</span></div>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li><a href="#" class="active">Work</a></li>
+      <li><a href="#">Process</a></li>
+      <li><a href="#">Experience</a></li>
+      <li><a href="#">Tools</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="work-body">
+    <div class="section-header-center">
+      <span class="section-eyebrow">Portfolio — Selected Work · Page 1 of 2</span>
+      <h2 class="section-title">Selected work</h2>
+      <div class="section-rule" style="margin:3mm auto 0;"></div>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Card 1 — FEATURED spans 2 cols -->
+      <div class="project-card featured">
+        <span class="project-category">Featured Project · eLearning &amp; Help Content</span>
+        <h3 class="project-title">Payroll Year-End: Complete Content Overhaul</h3>
+        <p class="project-desc">A full redesign of IRIS's most business-critical content period — payroll year-end. Transformed legacy PDFs, webinar decks, and scattered guidance into a structured, multi-format learning suite that measurably reduced support demand and improved user confidence at the highest-pressure time of the payroll calendar.</p>
+        <div class="project-tags">
+          <span class="project-tag">Articulate Storyline</span>
+          <span class="project-tag">MadCap Flare</span>
+          <span class="project-tag">Camtasia</span>
+          <span class="project-tag">WCAG 2.1</span>
+          <span class="project-tag">Legislation</span>
+        </div>
+        <span class="project-drive">
+          <span class="project-drive-arrow">→</span><span class="project-drive-url">drive.google.com/drive/folders/19OWn0_hQlzqjC1Rvw4kep644U6JAnFFL</span>
+        </span>
+        <span class="project-number">01</span>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="project-card">
+        <span class="project-category">Training Design · Onboarding</span>
+        <h3 class="project-title">New User Onboarding Programme</h3>
+        <p class="project-desc">Designed a structured onboarding journey for new payroll software users — combining microlearning modules, scenario-based tasks, and a progressive disclosure approach to reduce time-to-competence.</p>
+        <div class="project-tags">
+          <span class="project-tag">Teachable</span>
+          <span class="project-tag">Instructional Design</span>
+          <span class="project-tag">Microlearning</span>
+        </div>
+        <span class="project-drive">
+          <span class="project-drive-arrow">→</span><span class="project-drive-url">drive.google.com/drive/folders/1Dec_ohvocdWMS30kCyG_COL3hWMjGrOM</span>
+        </span>
+        <span class="project-number">02</span>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="project-card">
+        <span class="project-category">Content Design · Help</span>
+        <h3 class="project-title">Staffology Help Content Rebuild</h3>
+        <p class="project-desc">End-to-end restructure of help and support documentation for a modern cloud-based payroll product. Applied structured authoring and consistent language across a growing knowledge base.</p>
+        <div class="project-tags">
+          <span class="project-tag">MadCap Flare</span>
+          <span class="project-tag">Structured Authoring</span>
+          <span class="project-tag">Git</span>
+        </div>
+        <span class="project-drive">
+          <span class="project-drive-arrow">→</span><span class="project-drive-url">drive.google.com/drive/folders/1FSHJrAtfTerXPA_oqBCqzIpvG2fKoQbp</span>
+        </span>
+        <span class="project-number">03</span>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="project-card">
+        <span class="project-category">Content Design · User Settings</span>
+        <h3 class="project-title">OKTA &amp; User Settings: Plain-Language Guide</h3>
+        <p class="project-desc">Translated dense authentication and admin configuration flows into step-by-step guidance for non-technical payroll administrators — with annotated visuals, decision trees, and clear error messaging.</p>
+        <div class="project-tags">
+          <span class="project-tag">Plain Language</span>
+          <span class="project-tag">UX Writing</span>
+          <span class="project-tag">Accessibility</span>
+        </div>
+        <span class="project-drive">
+          <span class="project-drive-arrow">→</span><span class="project-drive-url">drive.google.com/drive/folders/1X2-L_7JTTybetGiETAZitptpbyvzKv5R</span>
+        </span>
+        <span class="project-number">04</span>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="project-card">
+        <span class="project-category">Training Videos · Multimedia</span>
+        <h3 class="project-title">Walkthrough Training Video Library</h3>
+        <p class="project-desc">Scripted, recorded, and produced a library of product walkthrough and how-to videos using Camtasia and Clipchamp — supporting varied learning styles and reducing dependency on live training.</p>
+        <div class="project-tags">
+          <span class="project-tag">Camtasia</span>
+          <span class="project-tag">Clipchamp</span>
+          <span class="project-tag">Scriptwriting</span>
+        </div>
+        <span class="project-drive">
+          <span class="project-drive-arrow">→</span><span class="project-drive-url">drive.google.com/drive/folders/1umRPncLQMEPgZFHB5zPd6W7gAAm_uyqW</span>
+        </span>
+        <span class="project-number">05</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 4 — PORTFOLIO continued (cards 6–9)
+═══════════════════════════════════════════ -->
+<div class="page bg-cream">
+  <nav class="nav">
+    <div class="nav-logo">David <span>Bloxham</span></div>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li><a href="#" class="active">Work</a></li>
+      <li><a href="#">Process</a></li>
+      <li><a href="#">Experience</a></li>
+      <li><a href="#">Tools</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="work-body">
+    <div class="section-header-center">
+      <span class="section-eyebrow">Portfolio — Selected Work · Page 2 of 2</span>
+      <h2 class="section-title">Selected work</h2>
+      <div class="section-rule" style="margin:3mm auto 0;"></div>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Card 6 -->
+      <div class="project-card featured">
+        <span class="project-category">Writing · Thought Leadership</span>
+        <h3 class="project-title">Articles &amp; Thought Leadership</h3>
+        <p class="project-desc">Authored blogs, thought-leadership pieces, and compliance articles for payroll and HR audiences — translating regulatory change into clear, confident guidance that builds user trust. Topics span payroll legislation updates, best practice in content design for compliance-heavy domains, and learning design for complex regulatory topics.</p>
+        <div class="project-tags">
+          <span class="project-tag">Blogs</span>
+          <span class="project-tag">Compliance Writing</span>
+          <span class="project-tag">Tone of Voice</span>
+          <span class="project-tag">Payroll &amp; HR</span>
+        </div>
+        <span class="project-drive">
+          <span class="project-drive-arrow">→</span><span class="project-drive-url">drive.google.com/drive/folders/1K6JGC-lzjX2HqYycq2NIwKK6tjr01qA5</span>
+        </span>
+        <span class="project-number">06</span>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="project-card">
+        <span class="project-category">Training Design · CPD</span>
+        <h3 class="project-title">CPD-Accredited Training Programmes</h3>
+        <p class="project-desc">Designed and delivered CPD Standards Office-accredited programmes covering payroll legislation. Blended webinars, in-person sessions, and workbooks — consistently achieving high NPS scores.</p>
+        <div class="project-tags">
+          <span class="project-tag">CPD Standards Office</span>
+          <span class="project-tag">Blended Learning</span>
+          <span class="project-tag">GoToWebinar</span>
+        </div>
+        <span class="project-drive">
+          <span class="project-drive-arrow">→</span><span class="project-drive-url">drive.google.com/drive/folders/1QNMwU5xziF4u0gPfCe-FGu7GwmyA7UU_</span>
+        </span>
+        <span class="project-number">07</span>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="project-card">
+        <span class="project-category">Content Strategy · Accessibility</span>
+        <h3 class="project-title">WCAG 2.1 Accessibility Audit &amp; Action Plan</h3>
+        <p class="project-desc">Led accessibility audits across content estates and designed action plans to embed inclusive design into ongoing workflows — ensuring all help and learning content met WCAG 2.1 standards.</p>
+        <div class="project-tags">
+          <span class="project-tag">WCAG 2.1</span>
+          <span class="project-tag">Inclusive Design</span>
+          <span class="project-tag">Audit</span>
+        </div>
+        <span class="project-drive">
+          <span class="project-drive-arrow">→</span><span class="project-drive-url">drive.google.com/drive/folders/1JV7WtOA0mWOYBoArTIbUqCziBwIQ8QMp</span>
+        </span>
+        <span class="project-number">08</span>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="project-card">
+        <span class="project-category">Analytics · Content Strategy</span>
+        <h3 class="project-title">Content Performance Reporting</h3>
+        <p class="project-desc">Used Gainsight PX analytics, support ticket trends, and learner feedback to identify content gaps, measure impact, and prioritise the content roadmap — demonstrating clear ROI on content redesign projects.</p>
+        <div class="project-tags">
+          <span class="project-tag">Gainsight PX</span>
+          <span class="project-tag">Analytics</span>
+          <span class="project-tag">Continuous Improvement</span>
+        </div>
+        <span class="project-drive">
+          <span class="project-drive-arrow">→</span><span class="project-drive-url">drive.google.com/drive/folders/12-OkLduoKtSuu-D4hI9WN9LnHC5eNVtw</span>
+        </span>
+        <span class="project-number">09</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 5 — HOW I WORK
+═══════════════════════════════════════════ -->
+<div class="page bg-ink">
+  <nav class="nav" style="background:rgba(0,0,0,0.4);">
+    <div class="nav-logo">David <span>Bloxham</span></div>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#" class="active">Process</a></li>
+      <li><a href="#">Experience</a></li>
+      <li><a href="#">Tools</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="process-body">
+    <div class="section-header-center" style="margin-bottom:6mm;">
+      <span class="section-eyebrow">How I work</span>
+      <h2 class="section-title">My design process</h2>
+      <div class="section-rule" style="margin:3mm auto 0;"></div>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <span class="step-number">01</span>
+        <div class="step-title">Discover</div>
+        <p class="step-desc">Understand user needs, support trends, analytics, and SME input to identify the real problem before touching any content.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-number">02</span>
+        <div class="step-title">Define</div>
+        <p class="step-desc">Map learning objectives, audience personas, and scope. Decide format: module, video, help article, or blended programme.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-number">03</span>
+        <div class="step-title">Design</div>
+        <p class="step-desc">Structure content using instructional design principles. Storyboard, script, and prototype — testing clarity at every step.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-number">04</span>
+        <div class="step-title">Develop</div>
+        <p class="step-desc">Build in Articulate Storyline, MadCap Flare, Camtasia, or Teachable — applying accessibility standards and brand consistency throughout.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-number">05</span>
+        <div class="step-title">Measure</div>
+        <p class="step-desc">Track impact via analytics, NPS, support ticket reduction, and learner feedback. Iterate continuously to maintain relevance.</p>
+      </div>
+    </div>
+
+    <div class="process-principles">
+      <div class="principle">
+        <div class="principle-head"><span>✦</span> Users first, always</div>
+        <p class="principle-body">Every content decision starts with the question: will this actually help the user do what they're trying to do? Not what the business wants to say — what the user needs to know.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-head"><span>✦</span> Evidence over assumption</div>
+        <p class="principle-body">Support data, analytics, and direct feedback drive content priorities. I don't redesign content because it looks old — I redesign it because evidence shows it's failing users.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-head"><span>✦</span> Accessibility by design</div>
+        <p class="principle-body">WCAG 2.1 compliance and inclusive language aren't a checklist at the end of a project — they're embedded from the first draft. All formats, all audiences.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 6 — EXPERIENCE + TOOLS + CONTACT
+═══════════════════════════════════════════ -->
+<div class="page bg-cream">
+  <nav class="nav">
+    <div class="nav-logo">David <span>Bloxham</span></div>
+    <ul>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Process</a></li>
+      <li><a href="#" class="active">Experience</a></li>
+      <li><a href="#" class="active">Tools</a></li>
+      <li><a href="#" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page6-body">
+
+    <!-- Left: Experience -->
+    <div class="exp-col">
+      <span class="section-eyebrow">Career history</span>
+      <h2 class="section-title" style="font-size:16pt;">Experience</h2>
+      <div class="section-rule" style="margin-bottom:5mm;"></div>
+
+      <div class="exp-list">
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-period">2022 – 2025</div>
+            <div class="exp-company">IRIS Software Ltd</div>
+          </div>
+          <div>
+            <div class="exp-role">Content Designer</div>
+            <ul class="exp-achievements">
+              <li>Led redesign of large-scale learning and support content into accessible, user-centred resources.</li>
+              <li>Delivered payroll year-end overhauls that measurably reduced support demand.</li>
+              <li>Produced multimedia learning assets: video, scenario-based modules, interactive eLearning.</li>
+              <li>Led WCAG 2.1 accessibility audits and action plans across the full content estate.</li>
+              <li>Used Gainsight PX analytics to identify gaps and drive the content roadmap.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-period">2021 – 2022</div>
+            <div class="exp-company">IRIS Software Ltd</div>
+          </div>
+          <div>
+            <div class="exp-role">Training Content Designer</div>
+            <ul class="exp-achievements">
+              <li>Designed eLearning modules for multiple payroll products using Articulate Storyline and Rise.</li>
+              <li>Developed interactive courses, assessments, and microlearning experiences.</li>
+              <li>Produced targeted learning interventions based on real user behaviour and support trends.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-period">2011 – 2021</div>
+            <div class="exp-company">IRIS Software Ltd</div>
+          </div>
+          <div>
+            <div class="exp-role">Senior Consultant</div>
+            <ul class="exp-achievements">
+              <li>Designed and delivered CPD Standards Office-accredited training programmes.</li>
+              <li>Produced blended learning across webinars, video, and in-person delivery.</li>
+              <li>Consistently achieved high NPS and satisfaction scores.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-period">2005 – 2011</div>
+            <div class="exp-company">IRIS Software Ltd</div>
+          </div>
+          <div>
+            <div class="exp-role">Front Line Support</div>
+            <ul class="exp-achievements">
+              <li>Expert payroll legislation guidance and documentation for internal knowledge sharing.</li>
+              <li>Built the subject-matter expertise underpinning all subsequent training work.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Tools + Contact stacked -->
+    <div class="right-col">
+
+      <div class="tools-col">
+        <span class="section-eyebrow">Tech stack</span>
+        <h2 class="section-title" style="font-size:16pt;">Tools &amp; platforms</h2>
+        <div class="section-rule" style="margin-bottom:5mm;"></div>
+
+        <div class="tools-grid">
+          <div class="tool-card">
+            <span class="tool-icon">📚</span>
+            <div class="tool-name">MadCap Flare</div>
+            <div class="tool-type">Help authoring</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">🎯</span>
+            <div class="tool-name">Articulate Storyline</div>
+            <div class="tool-type">eLearning</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">🎓</span>
+            <div class="tool-name">Teachable</div>
+            <div class="tool-type">LMS</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">🎬</span>
+            <div class="tool-name">Camtasia</div>
+            <div class="tool-type">Video production</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">✂️</span>
+            <div class="tool-name">Clipchamp</div>
+            <div class="tool-type">Video editing</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">📊</span>
+            <div class="tool-name">Gainsight PX</div>
+            <div class="tool-type">Analytics</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">⚡</span>
+            <div class="tool-name">Power Automate</div>
+            <div class="tool-type">Workflow</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">🌿</span>
+            <div class="tool-name">Git</div>
+            <div class="tool-type">Version control</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">🤖</span>
+            <div class="tool-name">Copilot / AI</div>
+            <div class="tool-type">AI-assisted</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">🎥</span>
+            <div class="tool-name">GoToWebinar</div>
+            <div class="tool-type">Live training</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">🖥️</span>
+            <div class="tool-name">WebEx</div>
+            <div class="tool-type">Virtual delivery</div>
+          </div>
+          <div class="tool-card">
+            <span class="tool-icon">📋</span>
+            <div class="tool-name">Microsoft 365</div>
+            <div class="tool-type">Office suite</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-col">
+        <span class="section-eyebrow">Let's talk</span>
+        <h2 class="section-title" style="font-size:14pt; color:var(--paper);">Get in touch</h2>
+        <div class="section-rule" style="background:var(--rust); margin:2mm auto 4mm;"></div>
+        <p class="contact-tagline">Open to content design, learning design, and training development roles — freelance or permanent.</p>
+        <div class="contact-links">
+          <span class="contact-link primary">✉ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3b7b2a5bab7fdb1bfbcabbbb2bee2eaebe393bca6a7bfbcbcb8fdb0bcbe">[email&#160;protected]</a></span>
+          <span class="contact-link secondary">in linkedin.com/in/david-bloxham</span>
+          <span class="contact-link secondary">📞 07746 650925</span>
+        </div>
+        <p class="
