@@ -1431,8 +1431,8 @@
   </div>
   <p class="contact-tagline">Open to content design, learning design, and training development roles — freelance or permanent.</p>
   <div class="contact-links">
-    <a href="https://linkedin.com/in/david-bloxham" class="contact-link secondary" target="_blank">in LinkedIn</a>
-    <a href="https://drive.google.com/drive/folders/1JV7WtOA0mWOYBoArTIbUqCziBwIQ8QMp?usp=sharing" class="contact-link secondary" target="_blank">📁 Portfolio Drive</a>
+     <a href="https://linkedin.com/in/david-bloxham" class="contact-link secondary" target="_blank">in LinkedIn</a>
+      <a href="https://drive.google.com/drive/folders/1JV7WtOA0mWOYBoArTIbUqCziBwIQ8QMp?usp=sharing" class="contact-link secondary" target="_blank">📁 Portfolio Drive</a>
   </div>
   <p class="footer-note">David Bloxham · Content &amp; Training Designer · Reading, UK · 2025</p>
 </section>
@@ -1445,7 +1445,7 @@
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const projects = {
   mepw: {
     category: 'Featured Project · eLearning & Help Content',
@@ -1621,4 +1621,15 @@ function openModal(key) {
 }
 
 function closeModal(e) {
-  if (e.target === document.getElementById('modal-overlay')) closeModalDirect(
+  if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+</script>
+</body>
+</html>
